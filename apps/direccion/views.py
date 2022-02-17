@@ -15,6 +15,7 @@ from .forms import fRegistroUsuariosDir, fCorreosNotificacion
 from .validate_file import validate_file_type, validate_img_type
 from .send_email import send_notification_mail
 patron = re.compile(r'^\d{4}$')
+years = ['2019', '2020', '2021', '2022']
 
 def vLogin(request):
     if request.user.is_authenticated:
@@ -43,7 +44,7 @@ def vPrinDirec(request):
     current_year = request.GET.get('year', str(timezone.localtime().date().year))
     if patron.search(current_year) is None:
         current_year = timezone.localtime().date().year
-    context = {'current_year': current_year}
+    context = {'current_year': current_year, 'years' : years}
     return render(request, 'direccion/prinDirec.html', context)
 
 # Verifica si el usuario tiene permiso para ver el panel
@@ -62,7 +63,7 @@ def see_panel_test(user):
 @user_passes_test(see_panel_test, login_url = '/direccion')
 def vPrincipal(request):
     current_year = timezone.localtime().date().year
-    context = {'direcciones': Direcciones.objects.exclude(codename = 'sg'), 'current_year': current_year}
+    context = {'direcciones': Direcciones.objects.exclude(codename = 'sg'), 'current_year': current_year, 'years': years}
     return render(request, 'base/main.html', context)
 
 @login_required
@@ -81,7 +82,7 @@ def vRegistroUsuarios(request):
                 usuario.save()
                 usuario.direccion.titular = usuario
                 usuario.direccion.save()
-            except expression as identifier:
+            except Exception as identifier:
                 print(identifier)
                 messages.error(request,'Ha ocurrido un error. Intente de nuevo por favor')
                 return redirect('rUsuario')    

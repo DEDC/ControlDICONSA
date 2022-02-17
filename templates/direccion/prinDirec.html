@@ -47,10 +47,9 @@ color: #892541;
 <div class="bn-cont">
     <form method="get" id="formYear">
         <select class="browser-default right" name="year" id="filter-year" style="width: 100px;">
-            <option value="" selected>----</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
+            {% for y in years %}
+            <option {% if y == current_year %}selected{% endif %} value="{{y}}">{{y}}</option>
+            {% endfor %}
         </select>
     </form>
 </div>
