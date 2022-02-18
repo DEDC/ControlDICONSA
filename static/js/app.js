@@ -9,7 +9,7 @@ $(function () {
         showFiles($(this), e.target.files)
     })
     $('#add-objs').on('click', function () {
-        $('#act-objs > table > tbody').append('<tr><td class="center-align"><input type="text" name="obj-name"></td><td><label class="secondary-content"><input type="checkbox" class="obj-check"/><span></span></label><input type="hidden" name="obj-check" value="false"/></td><td class="center-align"><a class="btn-small red del-objs"><i class="material-icons">delete</i></a></td></tr>')
+        $('#act-objs > table > tbody').append('<tr><td><input type="text" name="obj-name"></td><td><input type="date" name="obj-endate" required></td><td><label class="secondary-content"><input type="checkbox" class="obj-check"/><span></span></label><input type="hidden" name="obj-check" value="false"/></td><td><a class="btn-small red del-objs"><i class="material-icons">delete</i></a></td></tr>')
         $('.del-objs').last().on('click', function () {
             $(this).closest('tr').remove()
         })
@@ -19,11 +19,13 @@ $(function () {
     })
     $('.add-saved-objs').on('click', function () {
         let tbody = $(this).parent().siblings('.act-objs').find('table').find('tbody')
-        tbody.append('<tr><td class=""><input type="text"></td><td><label class="secondary-content"><input type="checkbox" class="" value=""><span></span></label></td><td class="center-align"><a class="btn-small green save-new-obj" href="#"><i class="material-icons">check</i></a>&nbsp;<a class="btn-small red del-new-obj" href="#"><i class="material-icons">clear</i></a></td></tr>')
+        tbody.append('<tr><td><input type="text"></td><td><input type="date"></td><td><label class="secondary-content"><input type="checkbox" class="" value=""><span></span></label></td><td class="center-align"><a class="btn-small green save-new-obj" href="#"><i class="material-icons">check</i></a>&nbsp;<a class="btn-small red del-new-obj" href="#"><i class="material-icons">clear</i></a></td></tr>')
         let btns = tbody.children('tr').last().children('td').last().children('a')
         $(btns[0]).on('click', function (e) {
             e.preventDefault()
-            let input = $(this).closest('tr').children('td').first().children('input')
+            let tr = $(this).closest('tr')
+            let input = tr.find('input[type="text"]')
+            let date = tr.find('input[type="date"]')
             let checkbox = $($(this).closest('tr').children('td')[1]).find('input')
             let id_act = $(this).closest('.act-objs').attr('data-id')
             let badge = $(this).closest('li').find('div.collapsible-header > span.badge')
@@ -31,7 +33,7 @@ $(function () {
                 toastWarning('Debe de agregar un nombre de objetivo')
             }
             else {
-                addNewObj(input, checkbox, id_act, badge, $(this))
+                addNewObj(input, date, checkbox, id_act, badge, $(this))
             }
         })
         $(btns[1]).on('click', function (e) {
@@ -338,15 +340,16 @@ function editObjName(url, name, td) {
     })
 }
 
-function addNewObj(input, checkbox, act_id, badge, btn) {
+function addNewObj(input, date, checkbox, act_id, badge, btn) {
     $.ajax({
         method: "POST",
         url: 'ajax/actividad/objetivo/agregar',
-        data: { csrfmiddlewaretoken: getCSRFTokenValue(), obj_name: input.val(), obj_check: checkbox.prop("checked"), act_id: act_id }
+        data: { csrfmiddlewaretoken: getCSRFTokenValue(), obj_name: input.val(), obj_date: date.val(), obj_check: checkbox.prop("checked"), act_id: act_id }
     }).done(function (result) {
         if (result.status === 'success') {
             toastSuccess(result.text)
             input.after(input.val()).remove()
+            date.after(result.obj_date).remove()
             checkbox.addClass('obj-saved').val(result.obj_value)
             checkbox.on('change', function () {
                 changeCheckObj($(this).val(), $(this).prop("checked"), $(this))
@@ -357,7 +360,6 @@ function addNewObj(input, checkbox, act_id, badge, btn) {
             parent_td.empty()
             parent_td.append(`<a class="btn-small red del-obj" href="${result.delete_url}"><i class="material-icons">delete</i></a>&nbsp;<a class="btn-small blue edit-obj" href="${result.edit_url}"><i class="material-icons">edit</i></a>`)
             let btns = parent_td.children('a')
-            console.log(btns)
             $(btns[0]).on('click', function (e) {
                 e.preventDefault()
                 Swal.fire({
@@ -512,8 +514,9 @@ function formActivity() {
             let verify = true
             if (objs.length > 0) {
                 for (let i = 0; i < objs.length; i++) {
-                    if (objs[i].querySelector('td').querySelector('input').value.trim().length === 0) {
-                        objs[i].querySelector('td').querySelector('input').value = objs[i].querySelector('td').querySelector('input').value.trim()
+                    let name = objs[i].querySelector('input[name="obj-name"]')
+                    let date = objs[i].querySelector('input[name="obj-endate"]')
+                    if (!Boolean(name.value)) {
                         verify = false
                         toastWarning('Debe de agregar un nombre al objetivo')
                         break

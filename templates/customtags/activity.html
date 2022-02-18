@@ -51,7 +51,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="center-align">Nombre</th>
+                            <th>Nombre</th>
+                            <th>Fecha límite</th>
                             <th class="right-align">Hecho</th>
                             <th class="center-align">Acciones</th>
                         </tr>
@@ -62,6 +63,7 @@
                         {% for obj in act.objetivos.all %}
                         <tr>
                             <td>{{obj.nombre}}</td>
+                            <td>{{obj.end_date|default:'Indefinido'}}</td>
                             <td class="right-align">
                                 {% if act.direccion == user.direccion or act.usuario == user %}
                                 <label class="secondary-content"><input type="checkbox" class="obj-saved"

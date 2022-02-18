@@ -1,16 +1,17 @@
 # Python
 import os
 import re
+import datetime
 # Django
+from django.utils import formats
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import login as auth_login , authenticate, logout, update_session_auth_hash
 from django.contrib import messages
-from django.db.models import Count
 from django.utils import timezone
 # App direccion
-from .models import Usuarios, Permisos, Actividades, Objetivos, Direcciones, Evidencias, getPercentActivity, getLightActivity, Correos_Notificacion
+from .models import Permisos, Actividades, Objetivos, Direcciones, Evidencias, Correos_Notificacion
 from .forms import fRegistroUsuariosDir, fCorreosNotificacion
 from .validate_file import validate_file_type, validate_img_type
 from .send_email import send_notification_mail
@@ -19,7 +20,7 @@ years = ['2019', '2020', '2021', '2022']
 
 def vLogin(request):
     if request.user.is_authenticated:
-	    return redirect('logout')
+        return redirect('logout')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -196,6 +197,7 @@ def vRegistroActividades(request):
         direccion = request.POST.get('direccion', None)
         prioridad = request.POST.get('prioridad', None)
         objs = request.POST.getlist('obj-name')
+        objs_d = request.POST.getlist('obj-endate')
         objs_check = request.POST.getlist('obj-check')
         evidencias = request.FILES.getlist('evidencias')
         folio = 'ACT-'
@@ -207,10 +209,13 @@ def vRegistroActividades(request):
             activity = Actividades.objects.create(nombre = nombre, direccion = direccion, usuario = request.user, prioridad = prioridad)
             activity.folio = folio + str(activity.id)
             activity.save()
-            for obj, checked in zip(objs, objs_check):
+            for obj, checked, objd in zip(objs, objs_check, objs_d):
                 if len(obj) > 0:
-                    pass
-                    Objetivos.objects.create(nombre = obj, is_done = trueOrFalse(checked), actividad = activity)
+                    try:
+                        datetime.datetime.strptime(objd, '%Y-%m-%d')
+                        Objetivos.objects.create(nombre = obj, is_done = trueOrFalse(checked), actividad = activity, end_date = objd)
+                    except ValueError:
+                        Objetivos.objects.create(nombre = obj, is_done = trueOrFalse(checked), actividad = activity)
             for evidencia in evidencias:
                 Evidencias.objects.create(evidencia = evidencia, nombre = evidencia.name, actividad = activity)
             send_notification_mail(request.user, activity.direccion.titular)
@@ -409,15 +414,21 @@ def vEditarObjetivo(request, id):
 def vAgregarObjetivos(request):
     if request.is_ajax():
         obj_name = request.POST.get('obj_name')
+        obj_date = request.POST.get('obj_date')
         obj_check = request.POST.get('obj_check')
         act_id = request.POST.get('act_id')
         try:
             act = Actividades.objects.get(id__exact = act_id)
-            obj = Objetivos.objects.create(nombre = obj_name, is_done = trueOrFalse(obj_check), actividad = act)
+            try:
+                datetime.datetime.strptime(obj_date, '%Y-%m-%d')
+                obj = Objetivos.objects.create(nombre = obj_name, is_done = trueOrFalse(obj_check), actividad = act, end_date = obj_date)
+            except ValueError:
+                obj = Objetivos.objects.create(nombre = obj_name, is_done = trueOrFalse(obj_check), actividad = act)           
             info = {
                 'status' : 'success',
                 'text' : 'Objetivo agregado exitosamente',
                 'obj_value': obj.id,
+                'obj_date': obj.end_date if obj.end_date is not None else 'Indefinido', #formats.date_format(timezone.localtime(obj.end_date), "j \d\e F \d\e Y") if focir.fecha_reg is not None else 'Indefinido',
                 'percent' : obj.actividad.get_porcent(),
                 'color' : obj.actividad.get_light(),
                 'delete_url' : redirect('direccion:eObjetivo', id = obj.id).url, 
@@ -516,9 +527,3 @@ def trueOrFalse(text):
 def deleteFile(path):
     if os.path.isfile(path):
         os.remove(path)
-
-
-
-
-
-
