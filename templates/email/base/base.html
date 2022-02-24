@@ -1,0 +1,44 @@
+{% autoescape off %}
+<html>
+
+<body>
+    <div style="background-color: white;">
+        <div style="margin: 0 auto;max-width: 600px;">
+            <div style="background-color: #892541;padding: 30px;">
+                <div style="display: flex; justify-content: space-between">
+                    <img src="https://sif.tabasco.gob.mx/static/email/media/logo_sedec.png">
+                </div>
+                <div style="padding: 48px 20px 48px 20px; word-break: break-word">
+                    <div
+                        style="font-family:sans-serif; font-size: 40px; font-weight: bold; line-height: 100%; text-align: center; color: rgb(255, 255, 255);">
+                        {% block subject %}NOTIFICACIÓN{% endblock %}</div>
+                </div>
+            </div>
+            <div style="padding: 30px;border:1px solid #d9d9d9;background-color: white;">
+                <div
+                    style="font-family: sans-serif; font-size: 16px; line-height: 150%; text-align: left; color: rgb(17, 17, 17);">
+                    <h2>Estimado {% block username %}{% endblock %}.</h2>
+                </div>
+                <div
+                    style="font-family: sans-serif; font-size: 18px; line-height: 150%; color: rgb(17, 17, 17);text-align: justify;">
+                    {% block message %}{% endblock %}
+                </div>
+                <br>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://controlsedec.tabasco.gob.mx/" target="_blank">
+                        <img style="max-width: 100px;"
+                            src="https://controlsedec.tabasco.gob.mx/static/images/logo_ctrl.png">
+                    </a>
+                </div>
+                <div style="text-align: center;">
+                    <a href="https://controlsedec.tabasco.gob.mx/" target="_blank"
+                        style="background-color: white; color: #892541; padding: 15px 32px;
+                text-decoration: none;display: inline-block;font-size: 13px;font-family: sans-serif;margin-top: 10px;">IR A LA PLATAFORMA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endautoescape %}

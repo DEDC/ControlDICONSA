@@ -1,0 +1,24 @@
+{% extends 'email/base/base.html' %}
+{% block subject %}RECORDATORIO{% endblock %}
+{% block username %}{{user.get_full_name}}{% endblock %}
+{% block message %}
+<p>Le recordamos que tiene pendiente la entrega y/o actualización de los siguientes
+    objetivos establecidos por actividad en la plataforma <a target="_blank"
+        style="color: #892541; text-decoration: none;"
+        href="https://controlsedec.tabasco.gob.mx/"><b>ControlSedec</b></a>.
+</p>
+<ul style="color: #424242;">
+    {% for k, v in acts %}
+    <li><b>{{k.nombre}}</b>
+        <ul>
+            {% for obj in v %}
+            <li>{{obj.nombre}}
+                <br>
+                <span style="font-size: 14px; color: #ff6d00;">Fecha límite: {{obj.end_date}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

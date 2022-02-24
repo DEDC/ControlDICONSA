@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from apps.direccion.views import vLogin, vLogout, vRegistroUsuarios
 
-
 urlpatterns = [
     path('', vLogin, name = 'login'),
     path('direccion/', include('apps.direccion.urls', namespace = 'direccion')),
