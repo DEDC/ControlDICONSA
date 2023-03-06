@@ -13,11 +13,11 @@ margin-top: 3%;
 span.badge {
 min-width: 4rem;
 }
-.vino{
-background-color: #892541;
+.digreen{
+background-color: #235B4E;
 }
-.txt-vino{
-color: #892541;
+.txt-digreen{
+color: #235B4E;
 }
 .direction{
 padding: 10px;
@@ -44,15 +44,12 @@ margin: 5px;
 {% endblock %}
 {% block maincontent %}
 <div class="bn-cont">
-    <button class="btn vino viewSlide hide-on-small-only"><i class="material-icons">view_carousel</i></button>
-    <button class="btn vino viewModule hide-on-small-only"><i class="material-icons">view_module</i></button>
+    <button class="btn digreen viewSlide hide-on-small-only"><i class="material-icons">view_carousel</i></button>
+    <button class="btn digreen viewModule hide-on-small-only"><i class="material-icons">view_module</i></button>
     <select class="browser-default right" name="" id="filter-year" style="width: 100px;">
-        <option value="2019">2019</option>
-        <option value="2020">2020</option>
-        <option value="2021">2021</option>
         <option value="{{current_year}}" selected>{{current_year}}</option>
     </select>
-    <h2 class="center-align txt-vino num-year">{{current_year}}</h2>
+    <h2 class="center-align txt-digreen num-year">{{current_year}}</h2>
 </div>
 <div class="container">
     <input type="hidden" value="">

@@ -10,29 +10,29 @@ margin-top:7%;
 }
 button.btn{
 width : 100%;
-background-color: #892541;
+background-color: #235B4E;
 }
 button.btn:hover{
-background-color: #892541;
+background-color: #10312B;
 }
 button.btn:focus{
-background-color: #892541;
+background-color: #10312B;
 }
 
 .input-field input[type=text]:focus {
-border-bottom: 1px solid #b3935e !important;
-box-shadow: 0 1px 0 0 #b3935e !important;
+border-bottom: 1px solid #BC955C !important;
+box-shadow: 0 1px 0 0 #BC955C !important;
 }
 .input-field input[type=text]:focus+label {
-color: #b3935e !important;
+color: #BC955C !important;
 }
 
 .input-field input[type=password]:focus {
-border-bottom: 1px solid #b3935e !important;
-box-shadow: 0 1px 0 0 #b3935e !important;
+border-bottom: 1px solid #BC955C !important;
+box-shadow: 0 1px 0 0 #BC955C !important;
 }
 .input-field input[type=password]:focus+label {
-color: #b3935e !important;
+color: #BC955C !important;
 }
 {% endblock %}
 {% block navbar %}
@@ -40,10 +40,10 @@ color: #b3935e !important;
 {% block maincontent %}
 <div class="container">
     <div class="row">
-        <div class="col offset-l4 l4 z-depth-1 animated fadeIn" id="loginP">
+        <div class="col offset-l4 l4 z-depth-1 animated fadeIn white" id="loginP">
             <div id="login">
                 <div class="row center-align">
-                    <img class="responsive-img" src="{% static 'images/logo_ctrl.png' %}" alt="" width="55%">
+                    <img class="responsive-img" src="{% static 'images/logo_diconsa.png' %}" alt="" width="80%">
                 </div>
                 <form action="" method="post" id="formLogin">
                     {% csrf_token %}

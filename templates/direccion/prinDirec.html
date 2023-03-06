@@ -3,25 +3,25 @@
 {% block title %}Semáforo de actividades | {{user.direccion}} {% endblock %}
 {% block extrastyles %}
 a.btn-floating{
-background-color: #892541;
+background-color: #235B4E;
 }
 a.btn-floating:hover{
-background-color: #892541;
+background-color: #235B4E;
 }
-.vino{
-background-color: #892541;
+.digreen{
+background-color: #235B4E;
 }
-.vino:hover{
-background-color: #892541;
+.digreen:hover{
+background-color: #235B4E;
 }
-.vino:focus{
-background-color: #892541;
+.digreen:focus{
+background-color: #235B4E;
 }
 span.badge {
 min-width: 4rem;
 }
 .title-direc{
-color: #892541;
+color: #235B4E;
 }
 table {
 table-layout: fixed;
@@ -32,8 +32,8 @@ overflow-wrap: break-word;
 .bn-cont{
 margin: 5px;
 }
-.txt-vino{
-color: #892541;
+.txt-digreen{
+color: #235B4E;
 }
 {% endblock %}
 {% block direcName %}{{user.direccion.nombre}}{% endblock %}
@@ -57,7 +57,7 @@ color: #892541;
     <br>
     <br>
     <h4 class="center-align title-direc">{{user.direccion.nombre}}</h4>
-    <h5 class="center-align txt-vino num-year">{{current_year}}</h5>
+    <h5 class="center-align txt-digreen num-year">{{current_year}}</h5>
     <br>
     <br>
     {% if user.permisos.see_all %}
@@ -111,7 +111,7 @@ color: #892541;
                         </div>
                         <br>
                         <h5 class="center-align">Objetivos</h5>
-                        <a class="btn right vino" id="add-objs"><i class="material-icons">add</i></a>
+                        <a class="btn right digreen" id="add-objs"><i class="material-icons">add</i></a>
                         <br><br>
                         <div id="act-objs">
                             <table>
@@ -130,7 +130,7 @@ color: #892541;
                         <br><br>
                         <h5 class="center-align">Evidencias</h5>
                         <div class="file-field input-field">
-                            <div class="btn vino">
+                            <div class="btn digreen">
                                 <span>Seleccionar</span>
                                 <input type="file" name="evidencias" id="evidencias" multiple>
                             </div>
@@ -146,7 +146,7 @@ color: #892541;
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="waves-effect waves-light btn vino" id="save-act" href="#act-modal">Guardar</a>
+            <a href="#!" class="waves-effect waves-light btn digreen" id="save-act" href="#act-modal">Guardar</a>
         </div>
     </div>
 </div>

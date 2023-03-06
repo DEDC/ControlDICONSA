@@ -16,19 +16,22 @@
     {% endblock %}
     <style>
         .logo-rotation {
-            -webkit-animation: rotation 10s infinite linear;
+            -webkit-animation: rotation 3s infinite ease;
         }
 
-        @-webkit-keyframes rotation {
-            from {
-                -webkit-transform: rotate(0deg);
+        @keyframes rotation {
+            0% {
+                transform: rotateY(0deg);
             }
 
-            to {
-                -webkit-transform: rotate(359deg);
+            50% {
+                transform: rotateY(180deg);
             }
-        }
-
+        
+            100% {
+                transform: rotateY(360deg);
+            }
+        } 
         {% block extrastyles %}
         {% endblock %}
     </style>
@@ -37,8 +40,8 @@
 <body>
     {% block navbar %}
     <nav>
-        <div class="nav-wrapper" style="background-color: #892541">
-            <a href="#" class="brand-logo center">SEDEC</a>
+        <div class="nav-wrapper" style="background-color: #235B4E">
+            <a href="#" class="brand-logo center">DICONSA</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if user.permisos.see_panel or user.is_staff %}
@@ -72,14 +75,17 @@
     {% include 'base/validaciones.html' %}
     {% block extrafunctions %}{% endblock %}
     {% block powered %}
-    <footer class="center-align white">
+    <footer class="center-align">
         <br><br>
         <div class="center-align">
-            <img src="{% static 'images/logo-esencia-dorado.png' %}" alt="" width="50px" class="logo-rotation">
+            <img src="{% static 'images/tech_corn.png' %}" alt="" width="40px" style="opacity: 0.7;" class="logo-rotation">
         </div>
-        <span class="grey-text lighten-2">© Powered by Unidad de Apoyo Técnico e Informático</span>
+        <span class="grey-text lighten-2">© Powered by Subgerencia de Innovación y Sistemas</span>
     </footer>
     {% endblock %}
+    <div class="wrapper">
+        <img src="{% static 'images/wing_mx.png' %}" />
+    </div>
 </body>
 
 </html>

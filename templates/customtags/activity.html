@@ -1,6 +1,6 @@
 {% load static %}
 {% load customtags %}
-<ul class="collapsible popout">
+<ul class="collapsible popout white">
     {% for act in activities %}
     <li>
         <div class="collapsible-header {% if act.is_cancelled %}cancelled{% endif %}">
@@ -108,7 +108,7 @@
                             <div class="col l8 offset-l2 m12 s12">
                                 <input type="hidden" name="actividad" value="{{act.id}}">
                                 <div class="file-field input-field">
-                                    <div class="btn vino">
+                                    <div class="btn digreen">
                                         <span>Seleccionar</span>
                                         <input type="file" name="evidencias"
                                             accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document, .xls, .xlsx, application/msexcel, application/x-msexcel, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.presentationml.presentation, .ppt, .pptx, application/vnd.ms-powerpoint, application/pdf, image/jpeg, image/png"

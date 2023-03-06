@@ -12,14 +12,14 @@ margin-top:7%;
 #registro{
 padding: 0px 25px 0 25px;
 }
-.vino{
-background-color: #892541;
+.digreen{
+background-color: #235B4E;
 }
-.vino:hover{
-background-color: #892541;
+.digreen:hover{
+background-color: #235B4E;
 }
-.vino:focus{
-background-color: #892541;
+.digreen:focus{
+background-color: #235B4E;
 }
 button.btn, a.btn{
 width : 100%;
@@ -29,13 +29,13 @@ width : 100%;
 {% block maincontent %}
 <div class="container">
     <div class="row" id="registroP">
-        <div class="col offset-l1 l10 z-depth-1 animated fadeIn" id="registro">
-            <h4 class="center-align">Registro de usuarios</h4>
+        <div class="col offset-l1 l10 z-depth-1 animated fadeIn white" id="registro">
+            <h5 class="grey-text center-align"><b>Registro de usuarios</b></h5>
             <div class="divider"></div>
             <br>
             <div class="row">
-                <div class="col l5 m12 s12">
-                    <img class="responsive-img" src="{% static 'images/logo.png' %}" alt="">
+                <div class="col l5 m12 s12 center-align">
+                    <img class="responsive-img" src="{% static 'images/logo_diconsa.png' %}" width="80%" alt="">
                     <br><br>
                     <img src="{% static 'images/avatar.png' %}" alt="" id="avatar" class="avatar-filter responsive-img">
                 </div>
@@ -68,7 +68,7 @@ width : 100%;
                             <label for="id_password">Ingrese contraseña</label>
                         </div>
                         <div class="file-field input-field">
-                            <div class="btn vino">
+                            <div class="btn digreen">
                                 <span>Imagen</span>
                                 {{fUsuario.avatar}}
                             </div>
@@ -79,7 +79,7 @@ width : 100%;
                         <br>
                         <div class="row">
                             <div class="col l6 m6 s12">
-                                <button id="saveUser" class="btn vino right">Registrar</button>
+                                <button id="saveUser" class="btn digreen right">Registrar</button>
                             </div>
                             <div class="col l6 m6 s12">
                                 <a href="{% url 'login' %}" class="btn grey">Volver</a>

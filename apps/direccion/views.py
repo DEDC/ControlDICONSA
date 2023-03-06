@@ -16,7 +16,7 @@ from .forms import fRegistroUsuariosDir, fCorreosNotificacion
 from .validate_file import validate_file_type, validate_img_type
 from .send_email import send_notification_mail
 patron = re.compile(r'^\d{4}$')
-years = ['2019', '2020', '2021', '2022']
+years = ['2023']
 
 def vLogin(request):
     if request.user.is_authenticated:
@@ -226,7 +226,7 @@ def vRegistroActividades(request):
     return redirect('direccion:prinDirect')
 
 def vEditarActividad(request, id):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         nombre = request.POST.get('new_name')
         try:
             act = Actividades.objects.get(id = id)
@@ -249,7 +249,7 @@ def vEditarActividad(request, id):
     return JsonResponse(info, safe = False)
 
 def vActividadEstatus(request, id):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         status = request.POST.get('status')
         try:
             direccion = Actividades.objects.get(id = id)
@@ -273,7 +273,7 @@ def vActividadEstatus(request, id):
     return JsonResponse(info, safe = False)
 
 def vEditarComentario(request, id):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         comentario = request.POST.get('comment')
         try:
             act = Actividades.objects.get(id = id)
@@ -304,7 +304,7 @@ def vEliminarActividades(request, id):
     return redirect('direccion:prinDirect')
 
 def vEditarPrioridad(request):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         id_act = request.POST.get('id', None)
         prioridad = request.POST.get('prioridad', None)
         try:
@@ -333,7 +333,7 @@ def vEditarPrioridad(request):
 def vObtenerActividades(request):
     current_year = timezone.localtime().date().year
     year = request.GET.get('year', current_year)
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         direcciones = Direcciones.objects.exclude(see_in_list = False).order_by('nombre')
         data_dir = []
         for direccion in direcciones:
@@ -389,7 +389,7 @@ def vEliminarObjetivo(request, id):
     return redirect('direccion:prinDirect')
 
 def vEditarObjetivo(request, id):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         nombre = request.POST.get('new_name')
         try:
             obj = Objetivos.objects.get(id = id)
@@ -412,7 +412,7 @@ def vEditarObjetivo(request, id):
     return JsonResponse(info, safe = False)
 
 def vAgregarObjetivos(request):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         obj_name = request.POST.get('obj_name')
         obj_date = request.POST.get('obj_date')
         obj_check = request.POST.get('obj_check')
@@ -450,7 +450,7 @@ def vAgregarObjetivos(request):
 
 @login_required
 def vEditarCheckObjetivo(request):
-    if request.is_ajax():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         id_obj = request.POST.get('id')
         check_status = request.POST.get('status_check')
         try:
